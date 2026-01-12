@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>이지민 | 소개 홈페이지</title>
+  <meta name="description" content="이지민을 소개하는 개인 홈페이지" />
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#111a2e;
+      --text:#e8eefc;
+      --muted:#a9b6d6;
+      --accent:#6ea8fe;
+      --accent2:#7cf0c5;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(110,168,254,.25), transparent 55%),
+        radial-gradient(900px 600px at 90% 20%, rgba(124,240,197,.18), transparent 55%),
+        radial-gradient(900px 600px at 50% 110%, rgba(110,168,254,.16), transparent 55%),
+        var(--bg);
+      line-height:1.6;
+    }
+    a{color:inherit}
+    .container{width:min(1080px, 92vw); margin:0 auto;}
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,.6);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{display:flex; gap:10px; align-items:center; text-decoration:none}
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 30px rgba(110,168,254,.25);
+    }
+    .brand b{letter-spacing:.2px}
+    .links{display:flex; gap:16px; align-items:center}
+    .links a{
+      text-decoration:none; color:var(--muted);
+      padding:8px 10px; border-radius:10px;
+    }
+    .links a:hover{background:rgba(255,255,255,.06); color:var(--text)}
+    .hero{
+      padding:56px 0 26px;
+      display:grid; grid-template-columns: 1.2fr .8fr;
+      gap:26px; align-items:stretch;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-left{padding:28px}
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:6px 10px; border-radius:999px;
+      background: rgba(110,168,254,.14);
+      border: 1px solid rgba(110,168,254,.25);
+      color: #cfe0ff;
+      font-size: 13px;
+    }
+    h1{margin:14px 0 8px; font-size:42px; line-height:1.15}
+    h1 span{background:linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text; background-clip:text; color:transparent}
+    .sub{color:var(--muted); font-size:16px; margin:0 0 18px}
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      text-decoration:none;
+      color:var(--text);
+      font-weight:600;
+    }
+    .btn.primary{
+      border-color: rgba(110,168,254,.55);
+      background: linear-gradient(135deg, rgba(110,168,254,.25), rgba(124,240,197,.18));
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .meta{display:flex; gap:14px; flex-wrap:wrap; margin-top:14px; color:var(--muted); font-size:14px}
+    .meta div{display:flex; gap:8px; align-items:center}
+    .hero-right{padding:22px; display:flex; flex-direction:column; gap:14px}
+    .profile{
+      display:flex; gap:14px; align-items:center;
+      padding:16px; border-radius: 16px;
+      background: rgba(0,0,0,.18);
+      border:1px solid var(--line);
+    }
+    .avatar{
+      width:64px; height:64px; border-radius:18px;
+      background: url('profile.jpg') center/cover no-repeat,
+                  linear-gradient(135deg, rgba(110,168,254,.55), rgba(124,240,197,.35));
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .profile .name{font-size:18px; font-weight:800}
+    .profile .role{color:var(--muted); font-size:14px}
+    .mini{
+      display:grid; grid-template-columns:1fr 1fr; gap:12px;
+    }
+    .mini .box{
+      padding:14px;
+      border-radius:16px;
+      background: rgba(0,0,0,.18);
+      border:1px solid var(--line);
+    }
+    .box b{display:block; margin-bottom:6px}
+    main{padding: 18px 0 70px}
+    section{margin-top:20px}
+    .grid{
+      display:grid; grid-template-columns: 1fr 1fr;
+      gap:18px;
+    }
+    .section-card{padding:22px}
+    h2{margin:0 0 10px; font-size:20px}
+    ul{margin:10px 0 0; padding-left:18px; color:var(--muted)}
+    .tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
+    .tag{
+      font-size:13px; color:#dbe6ff;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+    }
+    .timeline{margin:10px 0 0; display:flex; flex-direction:column; gap:10px}
+    .item{
+      padding:12px 14px; border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.16);
+      color:var(--muted);
+    }
+    .item b{color:var(--text)}
+    footer{
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      padding:20px 0;
+    }
+    .foot{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    @media (max-width: 860px){
+      .hero{grid-template-columns:1fr; padding-top:34px}
+      h1{font-size:36px}
+      .grid{grid-template-columns:1fr}
+      .links{gap:8px}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="홈으로">
+      <div class="logo" aria-hidden="true"></div>
+      <b>이지민</b>
+    </a>
+    <nav class="links" aria-label="메뉴">
+      <a href="#about">소개</a>
+      <a href="#skills">강점</a>
+      <a href="#projects">활동</a>
+      <a href="#contact">연락</a>
+    </nav>
+  </div>
+</header>
+
+<div id="top" class="container hero">
+  <div class="card hero-left">
+    <div class="kicker">👋 Hello! 이지민의 소개 페이지</div>
+    <h1>안녕하세요, <span>이지민</span>입니다.</h1>
+    <p class="sub">
+      사람과 일을 더 매끄럽게 연결하는 것을 좋아해요.
+      이 페이지는 이지민의 간단한 소개, 강점, 활동, 연락처를 담고 있습니다.
+    </p>
+
+    <div class="cta">
+      <a class="btn primary" href="#contact">연락하기 ✉️</a>
+      <a class="btn" href="#projects">활동 보기 →</a>
+      <a class="btn" href="#" onclick="window.print(); return false;">인쇄/PDF 🖨️</a>
+    </div>
+
+    <div class="meta">
+      <div>📍 <span>Seoul / Remote</span></div>
+      <div>💼 <span>관심분야: 기획 · 콘텐츠 · 커뮤니케이션</span></div>
+      <div>✨ <span>키워드: 성실함, 실행력, 협업</span></div>
+    </div>
+  </div>
+
+  <aside class="card hero-right">
+    <div class="profile">
+      <div class="avatar" aria-label="프로필 이미지"></div>
+      <div>
+        <div class="name">이지민</div>
+        <div class="role">소개 한 줄: “꾸준히, 깔끔하게, 끝까지.”</div>
+      </div>
+    </div>
+
+    <div class="mini">
+      <div class="box">
+        <b>좋아하는 것</b>
+        <div style="color:var(--muted)">좋은 글 · 산책 · 정리정돈</div>
+      </div>
+      <div class="box">
+        <b>잘하는 것</b>
+        <div style="color:var(--muted)">문제정의 · 문서화 · 일정관리</div>
+      </div>
+    </div>
+
+    <div class="box">
+      <b>한 문장 소개</b>
+      <div style="color:var(--muted)">
+        목표를 쪼개서 실행 가능한 계획으로 만들고, 꾸준히 완성하는 사람입니다.
+      </div>
+    </div>
+  </aside>
+</div>
+
+<main class="container">
+  <section id="about" class="grid">
+    <div class="card section-card">
+      <h2>소개</h2>
+      <p style="color:var(--muted); margin:0">
+        이지민은 <b style="color:var(--text)">명확한 커뮤니케이션</b>과
+        <b style="color:var(--text)">꾸준한 실행</b>을 바탕으로 일을 진행합니다.
+        낯선 과제도 빠르게 구조화하고, 팀이 이해하기 쉬운 형태로 정리하는 것을 좋아합니다.
+      </p>
+      <div class="tags">
+        <span class="tag">문서화</span>
+        <span class="tag">기획</span>
+        <span class="tag">커뮤니케이션</span>
+        <span class="tag">협업</span>
+      </div>
+    </div>
+
+    <div class="card section-card">
+      <h2>경험 하이라이트</h2>
+      <div class="timeline">
+        <div class="item"><b>프로젝트 리딩</b> — 일정/역할 정리와 실행 관리</div>
+        <div class="item"><b>콘텐츠 제작</b> — 기획부터 발행까지 end-to-end</div>
+        <div class="item"><b>업무 프로세스 개선</b> — 반복 작업을 간단하게</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="grid">
+    <div class="card section-card">
+      <h2>강점</h2>
+      <ul>
+        <li>복잡한 정보를 <b>간단한 구조</b>로 정리</li>
+        <li>끝까지 마무리하는 <b>지속력</b></li>
+        <li>상대가 이해하기 쉬운 <b>커뮤니케이션</b></li>
+        <li>작게 시작해 빠르게 개선하는 <b>실행력</b></li>
+      </ul>
+    </div>
+
+    <div class="card section-card">
+      <h2>스킬 키워드</h2>
+      <div class="tags">
+        <span class="tag">Notion / Docs</span>
+        <span class="tag">PPT 기획</span>
+        <span class="tag">콘텐츠 운영</span>
+        <span class="tag">리서치</span>
+        <span class="tag">일정 관리</span>
+      </div>
+      <p style="color:var(--muted); margin:12px 0 0">
+        필요하면 여기 부분을 “개발/디자인/마케팅” 등으로 맞춰 커스터마이징하면 좋아요.
+      </p>
+    </div>
+  </section>
+
+  <section id="projects" class="grid">
+    <div class="card section-card">
+      <h2>활동 / 프로젝트</h2>
+      <div class="timeline">
+        <div class="item"><b>프로젝트 A</b> — 목표 설정 & 실행 플랜 수립</div>
+        <div class="item"><b>프로젝트 B</b> — 문서/가이드 정리 및 운영</div>
+        <div class="item"><b>프로젝트 C</b> — 커뮤니케이션/협업 효율 개선</div>
+      </div>
+      <p style="color:var(--muted); margin:12px 0 0">
+        실제 프로젝트명/성과(숫자)를 넣으면 완성도가 확 올라갑니다.
+      </p>
+    </div>
+
+    <div class="card section-card">
+      <h2>갤러리</h2>
+      <p style="color:var(--muted); margin:0 0 10px">
+        아래는 예시 이미지 영역입니다. 원하는 사진을 넣으려면 파일명을 바꿔주세요.
+      </p>
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px">
+        <div style="aspect-ratio:1/1; border-radius:16px; border:1px solid var(--line);
+          background: url('img1.jpg') center/cover no-repeat, rgba(255,255,255,.05)"></div>
+        <div style="aspect-ratio:1/1; border-radius:16px; border:1px solid var(--line);
+          background: url('img2.jpg') center/cover no-repeat, rgba(255,255,255,.05)"></div>
+        <div style="aspect-ratio:1/1; border-radius:16px; border:1px solid var(--line);
+          background: url('img3.jpg') center/cover no-repeat, rgba(255,255,255,.05)"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="card section-card">
+      <h2>연락</h2>
+      <p style="color:var(--muted); margin:0 0 12px">
+        아래 정보를 실제 연락처로 바꿔주세요.
+      </p>
+      <div class="grid" style="grid-template-columns:1fr 1fr; margin-top:0">
+        <div class="item">
+          <b>Email</b><br/>
+          <a href="mailto:jm.lee@example.com">jm.lee@example.com</a>
+        </div>
+        <div class="item">
+          <b>Instagram</b><br/>
+          <a href="https://instagram.com/" target="_blank" rel="noreferrer">instagram.com/your_id</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container foot">
+    <div>© <span id="year"></span> 이지민. All rights reserved.</div>
+    <div style="display:flex; gap:12px">
+      <a href="#top" style="color:var(--muted); text-decoration:none">맨 위로 ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
