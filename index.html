@@ -180,6 +180,29 @@
       color:var(--muted);
     }
     .item b{color:var(--text)}
+    .form{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    .form-field{display:flex; flex-direction:column; gap:8px}
+    .form-field span{font-size:14px; color:var(--muted)}
+    .form-field input,
+    .form-field textarea{
+      width:100%;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      font-size:15px;
+      font-family: inherit;
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder{color:var(--muted)}
+    .form-field input:focus,
+    .form-field textarea:focus{
+      outline:2px solid var(--accent);
+      outline-offset:2px;
+    }
+    .form-field-full{grid-column:1 / -1}
+    .form button{justify-self:flex-start}
     footer{
       border-top:1px solid var(--line);
       color:var(--muted);
@@ -190,6 +213,7 @@
       .hero{grid-template-columns:1fr; padding-top:34px}
       h1{font-size:36px}
       .grid{grid-template-columns:1fr}
+      .form{grid-template-columns:1fr}
       .links{gap:8px}
       .nav-actions{flex-wrap:wrap; justify-content:flex-end}
     }
@@ -366,8 +390,39 @@
         </div>
       </div>
     </div>
+    <div class="card section-card" style="margin-top:18px">
+      <h2 data-i18n="inquiry-title">제휴 문의</h2>
+      <p style="color:var(--muted); margin:0 0 12px" data-i18n="inquiry-note">
+        간단한 정보를 남겨주시면 빠르게 연락드릴게요.
+      </p>
+      <form action="https://formspree.io/f/mgooenyj" method="POST" class="form">
+        <label class="form-field">
+          <span data-i18n="inquiry-name">이름</span>
+          <input name="name" type="text" required placeholder="이지민" data-i18n-attr="placeholder" data-i18n-key="inquiry-name-ph"/>
+        </label>
+        <label class="form-field">
+          <span data-i18n="inquiry-email">이메일</span>
+          <input name="email" type="email" required placeholder="name@example.com" data-i18n-attr="placeholder" data-i18n-key="inquiry-email-ph"/>
+        </label>
+        <label class="form-field">
+          <span data-i18n="inquiry-company">회사/브랜드</span>
+          <input name="company" type="text" placeholder="Company" data-i18n-attr="placeholder" data-i18n-key="inquiry-company-ph"/>
+        </label>
+        <label class="form-field form-field-full">
+          <span data-i18n="inquiry-message">문의 내용</span>
+          <textarea name="message" rows="4" required placeholder="프로젝트 개요와 일정" data-i18n-attr="placeholder" data-i18n-key="inquiry-message-ph"></textarea>
+        </label>
+        <button class="btn primary" type="submit" data-i18n="inquiry-submit">문의 보내기</button>
+      </form>
+    </div>
   </section>
 </main>
+
+<section class="container" style="padding-bottom:40px">
+  <div class="card section-card">
+    <div id="disqus_thread"></div>
+  </div>
+</section>
 
 <footer>
   <div class="container foot">
@@ -458,6 +513,17 @@
       "contact-note": "아래 정보를 실제 연락처로 바꿔주세요.",
       "contact-email": "Email",
       "contact-instagram": "Instagram",
+      "inquiry-title": "제휴 문의",
+      "inquiry-note": "간단한 정보를 남겨주시면 빠르게 연락드릴게요.",
+      "inquiry-name": "이름",
+      "inquiry-email": "이메일",
+      "inquiry-company": "회사/브랜드",
+      "inquiry-message": "문의 내용",
+      "inquiry-submit": "문의 보내기",
+      "inquiry-name-ph": "이지민",
+      "inquiry-email-ph": "name@example.com",
+      "inquiry-company-ph": "회사명",
+      "inquiry-message-ph": "프로젝트 개요와 일정",
       "footer-rights": "© <span id=\"year\"></span> 이지민. All rights reserved.",
       "footer-top": "맨 위로 ↑"
     },
@@ -522,6 +588,17 @@
       "contact-note": "Replace the info below with real contact details.",
       "contact-email": "Email",
       "contact-instagram": "Instagram",
+      "inquiry-title": "Partnership inquiry",
+      "inquiry-note": "Leave a few details and I will get back to you soon.",
+      "inquiry-name": "Name",
+      "inquiry-email": "Email",
+      "inquiry-company": "Company/Brand",
+      "inquiry-message": "Message",
+      "inquiry-submit": "Send inquiry",
+      "inquiry-name-ph": "Jimin Lee",
+      "inquiry-email-ph": "name@example.com",
+      "inquiry-company-ph": "Company",
+      "inquiry-message-ph": "Project overview and timeline",
       "footer-rights": "© <span id=\"year\"></span> Jimin Lee. All rights reserved.",
       "footer-top": "Back to top ↑"
     }
@@ -596,5 +673,21 @@
     applyLanguage(nextLang);
   });
 </script>
+
+<script>
+  /*
+  var disqus_config = function () {
+  this.page.url = PAGE_URL;
+  this.page.identifier = PAGE_IDENTIFIER;
+  };
+  */
+  (function() {
+    var d = document, s = d.createElement("script");
+    s.src = "https://product-builder01.disqus.com/embed.js";
+    s.setAttribute("data-timestamp", +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </body>
 </html>
