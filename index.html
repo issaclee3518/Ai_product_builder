@@ -180,6 +180,38 @@
       color:var(--muted);
     }
     .item b{color:var(--text)}
+    .rps-actions{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+    .rps-status{color:var(--muted); min-height:22px; margin-bottom:12px}
+    .rps-result{display:grid; grid-template-columns:repeat(3, 1fr); gap:12px}
+    .rps-pill{
+      margin-top:8px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: var(--panel);
+      text-align:center;
+      font-weight:700;
+    }
+    .rps-camera{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:220px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background: var(--panel);
+      overflow:hidden;
+    }
+    .rps-camera canvas{max-width:100%; height:auto}
+    .rps-labels{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:8px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .rps-hint{color:var(--muted); font-size:13px; margin:12px 0 0}
     .form{display:grid; grid-template-columns:1fr 1fr; gap:14px}
     .form-field{display:flex; flex-direction:column; gap:8px}
     .form-field span{font-size:14px; color:var(--muted)}
@@ -213,6 +245,8 @@
       .hero{grid-template-columns:1fr; padding-top:34px}
       h1{font-size:36px}
       .grid{grid-template-columns:1fr}
+      .rps-result{grid-template-columns:1fr}
+      .rps-labels{grid-template-columns:1fr}
       .form{grid-template-columns:1fr}
       .links{gap:8px}
       .nav-actions{flex-wrap:wrap; justify-content:flex-end}
@@ -373,6 +407,43 @@
     </div>
   </section>
 
+  <section id="rps" class="grid">
+    <div class="card section-card">
+      <h2 data-i18n="rps-title">미니 게임: 가위바위보</h2>
+      <p style="color:var(--muted); margin:0 0 12px" data-i18n="rps-note">
+        카메라로 가위/바위/보를 보여주세요. 모델이 인식하면 승부 결과를 알려줍니다.
+      </p>
+      <div class="rps-actions">
+        <button class="btn primary" type="button" id="rps-start" data-i18n="rps-start">게임 시작</button>
+        <button class="btn" type="button" id="rps-stop" data-i18n="rps-stop">종료</button>
+      </div>
+      <div class="rps-status" id="rps-status" aria-live="polite"></div>
+      <div class="rps-result">
+        <div>
+          <b data-i18n="rps-player">내 손</b>
+          <div id="rps-player" class="rps-pill">-</div>
+        </div>
+        <div>
+          <b data-i18n="rps-ai">상대</b>
+          <div id="rps-ai" class="rps-pill">-</div>
+        </div>
+        <div>
+          <b data-i18n="rps-outcome">결과</b>
+          <div id="rps-outcome" class="rps-pill">-</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card section-card">
+      <h2 data-i18n="rps-camera-title">카메라 화면</h2>
+      <div id="webcam-container" class="rps-camera"></div>
+      <div id="label-container" class="rps-labels"></div>
+      <p class="rps-hint" data-i18n="rps-hint">
+        브라우저에서 카메라 권한을 허용해야 정상 작동합니다.
+      </p>
+    </div>
+  </section>
+
   <section id="contact">
     <div class="card section-card">
       <h2 data-i18n="contact-title">연락</h2>
@@ -509,6 +580,15 @@
       "project-note": "실제 프로젝트명/성과(숫자)를 넣으면 완성도가 확 올라갑니다.",
       "gallery-title": "갤러리",
       "gallery-note": "아래는 예시 이미지 영역입니다. 원하는 사진을 넣으려면 파일명을 바꿔주세요.",
+      "rps-title": "미니 게임: 가위바위보",
+      "rps-note": "카메라로 가위/바위/보를 보여주세요. 모델이 인식하면 승부 결과를 알려줍니다.",
+      "rps-start": "게임 시작",
+      "rps-stop": "종료",
+      "rps-player": "내 손",
+      "rps-ai": "상대",
+      "rps-outcome": "결과",
+      "rps-camera-title": "카메라 화면",
+      "rps-hint": "브라우저에서 카메라 권한을 허용해야 정상 작동합니다.",
       "contact-title": "연락",
       "contact-note": "아래 정보를 실제 연락처로 바꿔주세요.",
       "contact-email": "Email",
@@ -584,6 +664,15 @@
       "project-note": "Add real project names and outcomes to make this shine.",
       "gallery-title": "Gallery",
       "gallery-note": "This is a sample image area. Replace file names to use your own photos.",
+      "rps-title": "Mini game: Rock Paper Scissors",
+      "rps-note": "Show rock/paper/scissors on camera. When the model detects it, you will see the result.",
+      "rps-start": "Start game",
+      "rps-stop": "Stop",
+      "rps-player": "You",
+      "rps-ai": "Opponent",
+      "rps-outcome": "Outcome",
+      "rps-camera-title": "Camera view",
+      "rps-hint": "You need to allow camera access in the browser.",
       "contact-title": "Contact",
       "contact-note": "Replace the info below with real contact details.",
       "contact-email": "Email",
@@ -656,6 +745,9 @@
     localStorage.setItem("lang", lang);
     applyTheme(root.getAttribute("data-theme") === "light" ? "light" : "dark");
     updateYear();
+    if (window.updateRpsLanguage) {
+      window.updateRpsLanguage(lang);
+    }
   };
 
   applyTheme(initialTheme);
@@ -672,6 +764,185 @@
     const nextLang = currentLang === "ko" ? "en" : "ko";
     applyLanguage(nextLang);
   });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script>
+  const RPS_MODEL_URL = "https://teachablemachine.withgoogle.com/models/UgfKQ0qts/";
+  let rpsModel = null;
+  let rpsWebcam = null;
+  let rpsLooping = false;
+  let rpsLabelContainer = null;
+  let rpsMaxPredictions = 0;
+  let rpsOpponent = null;
+  let rpsPlayerChoice = null;
+
+  const rpsStartBtn = document.getElementById("rps-start");
+  const rpsStopBtn = document.getElementById("rps-stop");
+  const rpsStatus = document.getElementById("rps-status");
+  const rpsPlayerEl = document.getElementById("rps-player");
+  const rpsAiEl = document.getElementById("rps-ai");
+  const rpsOutcomeEl = document.getElementById("rps-outcome");
+  const rpsWebcamContainer = document.getElementById("webcam-container");
+
+  const rpsChoices = ["rock", "paper", "scissors"];
+  const rpsChoiceLabels = {
+    rock: { ko: "바위", en: "Rock" },
+    paper: { ko: "보", en: "Paper" },
+    scissors: { ko: "가위", en: "Scissors" }
+  };
+  const rpsStatusMessages = {
+    cameraError: {
+      ko: "카메라 접근에 실패했습니다. 브라우저 권한을 확인해주세요.",
+      en: "Camera access failed. Please check your browser permission."
+    }
+  };
+
+  const rpsParseClass = (name) => {
+    const lowered = name.toLowerCase();
+    if (lowered.includes("rock") || lowered.includes("바위")) return "rock";
+    if (lowered.includes("paper") || lowered.includes("보")) return "paper";
+    if (lowered.includes("scissors") || lowered.includes("가위")) return "scissors";
+    return null;
+  };
+
+  const rpsOutcome = (player, ai) => {
+    if (!player || !ai) return null;
+    if (player === ai) return "draw";
+    if (
+      (player === "rock" && ai === "scissors") ||
+      (player === "paper" && ai === "rock") ||
+      (player === "scissors" && ai === "paper")
+    ) return "win";
+    return "lose";
+  };
+
+  const rpsOutcomeText = (result, lang) => {
+    const isKo = lang === "ko";
+    if (result === "win") return isKo ? "승리" : "Win";
+    if (result === "lose") return isKo ? "패배" : "Lose";
+    if (result === "draw") return isKo ? "무승부" : "Draw";
+    return "-";
+  };
+
+  const rpsUpdateStatus = (text) => {
+    rpsStatus.textContent = text || "";
+  };
+
+  const rpsClearLabels = () => {
+    if (!rpsLabelContainer) return;
+    rpsLabelContainer.innerHTML = "";
+  };
+
+  const rpsInit = async () => {
+    if (rpsModel && rpsWebcam) return;
+    const modelURL = RPS_MODEL_URL + "model.json";
+    const metadataURL = RPS_MODEL_URL + "metadata.json";
+    rpsModel = await tmImage.load(modelURL, metadataURL);
+    rpsMaxPredictions = rpsModel.getTotalClasses();
+
+    const flip = true;
+    rpsWebcam = new tmImage.Webcam(260, 260, flip);
+    await rpsWebcam.setup();
+    await rpsWebcam.play();
+    rpsWebcamContainer.innerHTML = "";
+    rpsWebcamContainer.appendChild(rpsWebcam.canvas);
+
+    rpsLabelContainer = document.getElementById("label-container");
+    rpsClearLabels();
+    for (let i = 0; i < rpsMaxPredictions; i += 1) {
+      rpsLabelContainer.appendChild(document.createElement("div"));
+    }
+  };
+
+  const rpsPredict = async () => {
+    if (!rpsModel || !rpsWebcam) return;
+    const prediction = await rpsModel.predict(rpsWebcam.canvas);
+    let best = prediction[0];
+    for (let i = 1; i < prediction.length; i += 1) {
+      if (prediction[i].probability > best.probability) {
+        best = prediction[i];
+      }
+    }
+
+    for (let i = 0; i < rpsMaxPredictions; i += 1) {
+      const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+      rpsLabelContainer.childNodes[i].textContent = classPrediction;
+    }
+
+    return best;
+  };
+
+  const rpsLoop = async () => {
+    if (!rpsLooping) return;
+    rpsWebcam.update();
+    const best = await rpsPredict();
+    const playerChoice = best && best.probability >= 0.8 ? rpsParseClass(best.className) : null;
+    const lang = document.documentElement.getAttribute("lang") === "en" ? "en" : "ko";
+
+    if (playerChoice) {
+      if (!rpsOpponent) {
+        rpsOpponent = rpsChoices[Math.floor(Math.random() * rpsChoices.length)];
+      }
+      rpsPlayerChoice = playerChoice;
+      const outcome = rpsOutcome(playerChoice, rpsOpponent);
+      rpsPlayerEl.textContent = rpsChoiceLabels[playerChoice][lang];
+      rpsAiEl.textContent = rpsChoiceLabels[rpsOpponent][lang];
+      rpsOutcomeEl.textContent = rpsOutcomeText(outcome, lang);
+    } else {
+      rpsPlayerChoice = null;
+      rpsPlayerEl.textContent = "-";
+      rpsOutcomeEl.textContent = "-";
+    }
+
+    window.requestAnimationFrame(rpsLoop);
+  };
+
+  const rpsStart = async () => {
+    try {
+      rpsUpdateStatus("");
+      await rpsInit();
+      rpsLooping = true;
+      rpsOpponent = null;
+      rpsAiEl.textContent = "-";
+      rpsOutcomeEl.textContent = "-";
+      window.requestAnimationFrame(rpsLoop);
+    } catch (err) {
+      const lang = document.documentElement.getAttribute("lang") === "en" ? "en" : "ko";
+      rpsUpdateStatus(rpsStatusMessages.cameraError[lang]);
+    }
+  };
+
+  const rpsStop = async () => {
+    rpsLooping = false;
+    rpsOpponent = null;
+    rpsPlayerChoice = null;
+    rpsPlayerEl.textContent = "-";
+    rpsAiEl.textContent = "-";
+    rpsOutcomeEl.textContent = "-";
+    if (rpsWebcam) {
+      await rpsWebcam.stop();
+      rpsWebcam = null;
+    }
+    rpsUpdateStatus("");
+    rpsWebcamContainer.innerHTML = "";
+    rpsClearLabels();
+  };
+
+  rpsStartBtn.addEventListener("click", rpsStart);
+  rpsStopBtn.addEventListener("click", rpsStop);
+
+  window.updateRpsLanguage = (lang) => {
+    if (rpsPlayerChoice && rpsOpponent) {
+      rpsPlayerEl.textContent = rpsChoiceLabels[rpsPlayerChoice][lang];
+      rpsAiEl.textContent = rpsChoiceLabels[rpsOpponent][lang];
+    }
+    if (rpsOutcomeEl.textContent !== "-") {
+      const outcome = rpsOutcome(rpsPlayerChoice, rpsOpponent);
+      rpsOutcomeEl.textContent = rpsOutcomeText(outcome, lang);
+    }
+  };
 </script>
 
 <script>
