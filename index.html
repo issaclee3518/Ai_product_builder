@@ -199,17 +199,18 @@
 <body>
 <header>
   <div class="container nav">
-    <a class="brand" href="#top" aria-label="홈으로">
+    <a class="brand" href="#top" aria-label="홈으로" data-i18n-attr="aria-label" data-i18n-key="aria-home">
       <div class="logo" aria-hidden="true"></div>
-      <b>이지민</b>
+      <b data-i18n="brand-name">이지민</b>
     </a>
     <div class="nav-actions">
-      <nav class="links" aria-label="메뉴">
-        <a href="#about">소개</a>
-        <a href="#skills">강점</a>
-        <a href="#projects">활동</a>
-        <a href="#contact">연락</a>
+      <nav class="links" aria-label="메뉴" data-i18n-attr="aria-label" data-i18n-key="aria-menu">
+        <a href="#about" data-i18n="nav-about">소개</a>
+        <a href="#skills" data-i18n="nav-skills">강점</a>
+        <a href="#projects" data-i18n="nav-projects">활동</a>
+        <a href="#contact" data-i18n="nav-contact">연락</a>
       </nav>
+      <button class="btn lang-toggle" type="button" aria-pressed="false">English</button>
       <button class="btn theme-toggle" type="button" aria-pressed="false">화이트 모드</button>
     </div>
   </div>
@@ -217,49 +218,49 @@
 
 <div id="top" class="container hero">
   <div class="card hero-left">
-    <div class="kicker">👋 Hello! 이지민의 소개 페이지</div>
-    <h1>안녕하세요, <span>이지민</span>입니다.</h1>
-    <p class="sub">
+    <div class="kicker" data-i18n="hero-kicker">👋 Hello! 이지민의 소개 페이지</div>
+    <h1 data-i18n-html="hero-title">안녕하세요, <span>이지민</span>입니다.</h1>
+    <p class="sub" data-i18n="hero-sub">
       사람과 일을 더 매끄럽게 연결하는 것을 좋아해요.
       이 페이지는 이지민의 간단한 소개, 강점, 활동, 연락처를 담고 있습니다.
     </p>
 
     <div class="cta">
-      <a class="btn primary" href="#contact">연락하기 ✉️</a>
-      <a class="btn" href="#projects">활동 보기 →</a>
-      <a class="btn" href="#" onclick="window.print(); return false;">인쇄/PDF 🖨️</a>
+      <a class="btn primary" href="#contact" data-i18n="cta-contact">연락하기 ✉️</a>
+      <a class="btn" href="#projects" data-i18n="cta-projects">활동 보기 →</a>
+      <a class="btn" href="#" onclick="window.print(); return false;" data-i18n="cta-print">인쇄/PDF 🖨️</a>
     </div>
 
     <div class="meta">
-      <div>📍 <span>Seoul / Remote</span></div>
-      <div>💼 <span>관심분야: 기획 · 콘텐츠 · 커뮤니케이션</span></div>
-      <div>✨ <span>키워드: 성실함, 실행력, 협업</span></div>
+      <div>📍 <span data-i18n="meta-location">서울 / 원격</span></div>
+      <div>💼 <span data-i18n="meta-interests">관심분야: 기획 · 콘텐츠 · 커뮤니케이션</span></div>
+      <div>✨ <span data-i18n="meta-keywords">키워드: 성실함, 실행력, 협업</span></div>
     </div>
   </div>
 
   <aside class="card hero-right">
     <div class="profile">
-      <div class="avatar" aria-label="프로필 이미지"></div>
+      <div class="avatar" aria-label="프로필 이미지" data-i18n-attr="aria-label" data-i18n-key="aria-profile"></div>
       <div>
-        <div class="name">이지민</div>
-        <div class="role">소개 한 줄: “꾸준히, 깔끔하게, 끝까지.”</div>
+        <div class="name" data-i18n="profile-name">이지민</div>
+        <div class="role" data-i18n="profile-role">소개 한 줄: “꾸준히, 깔끔하게, 끝까지.”</div>
       </div>
     </div>
 
     <div class="mini">
       <div class="box">
-        <b>좋아하는 것</b>
-        <div style="color:var(--muted)">좋은 글 · 산책 · 정리정돈</div>
+        <b data-i18n="likes-title">좋아하는 것</b>
+        <div style="color:var(--muted)" data-i18n="likes-body">좋은 글 · 산책 · 정리정돈</div>
       </div>
       <div class="box">
-        <b>잘하는 것</b>
-        <div style="color:var(--muted)">문제정의 · 문서화 · 일정관리</div>
+        <b data-i18n="strengths-title">잘하는 것</b>
+        <div style="color:var(--muted)" data-i18n="strengths-body">문제정의 · 문서화 · 일정관리</div>
       </div>
     </div>
 
     <div class="box">
-      <b>한 문장 소개</b>
-      <div style="color:var(--muted)">
+      <b data-i18n="one-line-title">한 문장 소개</b>
+      <div style="color:var(--muted)" data-i18n="one-line-body">
         목표를 쪼개서 실행 가능한 계획으로 만들고, 꾸준히 완성하는 사람입니다.
       </div>
     </div>
@@ -269,51 +270,51 @@
 <main class="container">
   <section id="about" class="grid">
     <div class="card section-card">
-      <h2>소개</h2>
-      <p style="color:var(--muted); margin:0">
+      <h2 data-i18n="about-title">소개</h2>
+      <p style="color:var(--muted); margin:0" data-i18n-html="about-body">
         이지민은 <b style="color:var(--text)">명확한 커뮤니케이션</b>과
         <b style="color:var(--text)">꾸준한 실행</b>을 바탕으로 일을 진행합니다.
         낯선 과제도 빠르게 구조화하고, 팀이 이해하기 쉬운 형태로 정리하는 것을 좋아합니다.
       </p>
       <div class="tags">
-        <span class="tag">문서화</span>
-        <span class="tag">기획</span>
-        <span class="tag">커뮤니케이션</span>
-        <span class="tag">협업</span>
+        <span class="tag" data-i18n="tag-documentation">문서화</span>
+        <span class="tag" data-i18n="tag-planning">기획</span>
+        <span class="tag" data-i18n="tag-communication">커뮤니케이션</span>
+        <span class="tag" data-i18n="tag-collaboration">협업</span>
       </div>
     </div>
 
     <div class="card section-card">
-      <h2>경험 하이라이트</h2>
+      <h2 data-i18n="highlights-title">경험 하이라이트</h2>
       <div class="timeline">
-        <div class="item"><b>프로젝트 리딩</b> — 일정/역할 정리와 실행 관리</div>
-        <div class="item"><b>콘텐츠 제작</b> — 기획부터 발행까지 end-to-end</div>
-        <div class="item"><b>업무 프로세스 개선</b> — 반복 작업을 간단하게</div>
+        <div class="item" data-i18n-html="highlight-1"><b>프로젝트 리딩</b> — 일정/역할 정리와 실행 관리</div>
+        <div class="item" data-i18n-html="highlight-2"><b>콘텐츠 제작</b> — 기획부터 발행까지 end-to-end</div>
+        <div class="item" data-i18n-html="highlight-3"><b>업무 프로세스 개선</b> — 반복 작업을 간단하게</div>
       </div>
     </div>
   </section>
 
   <section id="skills" class="grid">
     <div class="card section-card">
-      <h2>강점</h2>
+      <h2 data-i18n="strengths-section-title">강점</h2>
       <ul>
-        <li>복잡한 정보를 <b>간단한 구조</b>로 정리</li>
-        <li>끝까지 마무리하는 <b>지속력</b></li>
-        <li>상대가 이해하기 쉬운 <b>커뮤니케이션</b></li>
-        <li>작게 시작해 빠르게 개선하는 <b>실행력</b></li>
+        <li data-i18n-html="strength-1">복잡한 정보를 <b>간단한 구조</b>로 정리</li>
+        <li data-i18n-html="strength-2">끝까지 마무리하는 <b>지속력</b></li>
+        <li data-i18n-html="strength-3">상대가 이해하기 쉬운 <b>커뮤니케이션</b></li>
+        <li data-i18n-html="strength-4">작게 시작해 빠르게 개선하는 <b>실행력</b></li>
       </ul>
     </div>
 
     <div class="card section-card">
-      <h2>스킬 키워드</h2>
+      <h2 data-i18n="skill-keywords-title">스킬 키워드</h2>
       <div class="tags">
-        <span class="tag">Notion / Docs</span>
-        <span class="tag">PPT 기획</span>
-        <span class="tag">콘텐츠 운영</span>
-        <span class="tag">리서치</span>
-        <span class="tag">일정 관리</span>
+        <span class="tag" data-i18n="skill-notion">Notion / Docs</span>
+        <span class="tag" data-i18n="skill-ppt">PPT 기획</span>
+        <span class="tag" data-i18n="skill-content">콘텐츠 운영</span>
+        <span class="tag" data-i18n="skill-research">리서치</span>
+        <span class="tag" data-i18n="skill-schedule">일정 관리</span>
       </div>
-      <p style="color:var(--muted); margin:12px 0 0">
+      <p style="color:var(--muted); margin:12px 0 0" data-i18n="skill-note">
         필요하면 여기 부분을 “개발/디자인/마케팅” 등으로 맞춰 커스터마이징하면 좋아요.
       </p>
     </div>
@@ -321,20 +322,20 @@
 
   <section id="projects" class="grid">
     <div class="card section-card">
-      <h2>활동 / 프로젝트</h2>
+      <h2 data-i18n="projects-title">활동 / 프로젝트</h2>
       <div class="timeline">
-        <div class="item"><b>프로젝트 A</b> — 목표 설정 & 실행 플랜 수립</div>
-        <div class="item"><b>프로젝트 B</b> — 문서/가이드 정리 및 운영</div>
-        <div class="item"><b>프로젝트 C</b> — 커뮤니케이션/협업 효율 개선</div>
+        <div class="item" data-i18n-html="project-1"><b>프로젝트 A</b> — 목표 설정 & 실행 플랜 수립</div>
+        <div class="item" data-i18n-html="project-2"><b>프로젝트 B</b> — 문서/가이드 정리 및 운영</div>
+        <div class="item" data-i18n-html="project-3"><b>프로젝트 C</b> — 커뮤니케이션/협업 효율 개선</div>
       </div>
-      <p style="color:var(--muted); margin:12px 0 0">
+      <p style="color:var(--muted); margin:12px 0 0" data-i18n="project-note">
         실제 프로젝트명/성과(숫자)를 넣으면 완성도가 확 올라갑니다.
       </p>
     </div>
 
     <div class="card section-card">
-      <h2>갤러리</h2>
-      <p style="color:var(--muted); margin:0 0 10px">
+      <h2 data-i18n="gallery-title">갤러리</h2>
+      <p style="color:var(--muted); margin:0 0 10px" data-i18n="gallery-note">
         아래는 예시 이미지 영역입니다. 원하는 사진을 넣으려면 파일명을 바꿔주세요.
       </p>
       <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px">
@@ -350,17 +351,17 @@
 
   <section id="contact">
     <div class="card section-card">
-      <h2>연락</h2>
-      <p style="color:var(--muted); margin:0 0 12px">
+      <h2 data-i18n="contact-title">연락</h2>
+      <p style="color:var(--muted); margin:0 0 12px" data-i18n="contact-note">
         아래 정보를 실제 연락처로 바꿔주세요.
       </p>
       <div class="grid" style="grid-template-columns:1fr 1fr; margin-top:0">
         <div class="item">
-          <b>Email</b><br/>
+          <b data-i18n="contact-email">Email</b><br/>
           <a href="mailto:jm.lee@example.com">jm.lee@example.com</a>
         </div>
         <div class="item">
-          <b>Instagram</b><br/>
+          <b data-i18n="contact-instagram">Instagram</b><br/>
           <a href="https://instagram.com/" target="_blank" rel="noreferrer">instagram.com/your_id</a>
         </div>
       </div>
@@ -370,20 +371,163 @@
 
 <footer>
   <div class="container foot">
-    <div>© <span id="year"></span> 이지민. All rights reserved.</div>
+    <div data-i18n-html="footer-rights">© <span id="year"></span> 이지민. All rights reserved.</div>
     <div style="display:flex; gap:12px">
-      <a href="#top" style="color:var(--muted); text-decoration:none">맨 위로 ↑</a>
+      <a href="#top" style="color:var(--muted); text-decoration:none" data-i18n="footer-top">맨 위로 ↑</a>
     </div>
   </div>
 </footer>
 
 <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+  const updateYear = () => {
+    const yearEl = document.getElementById("year");
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
+    }
+  };
+  updateYear();
   const root = document.documentElement;
   const toggle = document.querySelector(".theme-toggle");
+  const langToggle = document.querySelector(".lang-toggle");
+  const translatableAttrs = document.querySelectorAll("[data-i18n-attr]");
   const storedTheme = localStorage.getItem("theme");
+  const storedLang = localStorage.getItem("lang");
   const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   const initialTheme = storedTheme || (prefersDark ? "dark" : "light");
+  const initialLang = storedLang || "ko";
+
+  const translations = {
+    ko: {
+      "meta-title": "이지민 | 소개 홈페이지",
+      "meta-desc": "이지민을 소개하는 개인 홈페이지",
+      "aria-home": "홈으로",
+      "aria-menu": "메뉴",
+      "aria-profile": "프로필 이미지",
+      "brand-name": "이지민",
+      "nav-about": "소개",
+      "nav-skills": "강점",
+      "nav-projects": "활동",
+      "nav-contact": "연락",
+      "hero-kicker": "👋 Hello! 이지민의 소개 페이지",
+      "hero-title": "안녕하세요, <span>이지민</span>입니다.",
+      "hero-sub": "사람과 일을 더 매끄럽게 연결하는 것을 좋아해요. 이 페이지는 이지민의 간단한 소개, 강점, 활동, 연락처를 담고 있습니다.",
+      "cta-contact": "연락하기 ✉️",
+      "cta-projects": "활동 보기 →",
+      "cta-print": "인쇄/PDF 🖨️",
+      "meta-location": "서울 / 원격",
+      "meta-interests": "관심분야: 기획 · 콘텐츠 · 커뮤니케이션",
+      "meta-keywords": "키워드: 성실함, 실행력, 협업",
+      "profile-name": "이지민",
+      "profile-role": "소개 한 줄: “꾸준히, 깔끔하게, 끝까지.”",
+      "likes-title": "좋아하는 것",
+      "likes-body": "좋은 글 · 산책 · 정리정돈",
+      "strengths-title": "잘하는 것",
+      "strengths-body": "문제정의 · 문서화 · 일정관리",
+      "one-line-title": "한 문장 소개",
+      "one-line-body": "목표를 쪼개서 실행 가능한 계획으로 만들고, 꾸준히 완성하는 사람입니다.",
+      "about-title": "소개",
+      "about-body": "이지민은 <b style=\"color:var(--text)\">명확한 커뮤니케이션</b>과 <b style=\"color:var(--text)\">꾸준한 실행</b>을 바탕으로 일을 진행합니다. 낯선 과제도 빠르게 구조화하고, 팀이 이해하기 쉬운 형태로 정리하는 것을 좋아합니다.",
+      "tag-documentation": "문서화",
+      "tag-planning": "기획",
+      "tag-communication": "커뮤니케이션",
+      "tag-collaboration": "협업",
+      "highlights-title": "경험 하이라이트",
+      "highlight-1": "<b>프로젝트 리딩</b> — 일정/역할 정리와 실행 관리",
+      "highlight-2": "<b>콘텐츠 제작</b> — 기획부터 발행까지 end-to-end",
+      "highlight-3": "<b>업무 프로세스 개선</b> — 반복 작업을 간단하게",
+      "strengths-section-title": "강점",
+      "strength-1": "복잡한 정보를 <b>간단한 구조</b>로 정리",
+      "strength-2": "끝까지 마무리하는 <b>지속력</b>",
+      "strength-3": "상대가 이해하기 쉬운 <b>커뮤니케이션</b>",
+      "strength-4": "작게 시작해 빠르게 개선하는 <b>실행력</b>",
+      "skill-keywords-title": "스킬 키워드",
+      "skill-notion": "Notion / Docs",
+      "skill-ppt": "PPT 기획",
+      "skill-content": "콘텐츠 운영",
+      "skill-research": "리서치",
+      "skill-schedule": "일정 관리",
+      "skill-note": "필요하면 여기 부분을 “개발/디자인/마케팅” 등으로 맞춰 커스터마이징하면 좋아요.",
+      "projects-title": "활동 / 프로젝트",
+      "project-1": "<b>프로젝트 A</b> — 목표 설정 & 실행 플랜 수립",
+      "project-2": "<b>프로젝트 B</b> — 문서/가이드 정리 및 운영",
+      "project-3": "<b>프로젝트 C</b> — 커뮤니케이션/협업 효율 개선",
+      "project-note": "실제 프로젝트명/성과(숫자)를 넣으면 완성도가 확 올라갑니다.",
+      "gallery-title": "갤러리",
+      "gallery-note": "아래는 예시 이미지 영역입니다. 원하는 사진을 넣으려면 파일명을 바꿔주세요.",
+      "contact-title": "연락",
+      "contact-note": "아래 정보를 실제 연락처로 바꿔주세요.",
+      "contact-email": "Email",
+      "contact-instagram": "Instagram",
+      "footer-rights": "© <span id=\"year\"></span> 이지민. All rights reserved.",
+      "footer-top": "맨 위로 ↑"
+    },
+    en: {
+      "meta-title": "Jimin Lee | Profile",
+      "meta-desc": "A personal profile page introducing Jimin Lee.",
+      "aria-home": "Go to top",
+      "aria-menu": "Menu",
+      "aria-profile": "Profile image",
+      "brand-name": "Jimin Lee",
+      "nav-about": "About",
+      "nav-skills": "Strengths",
+      "nav-projects": "Projects",
+      "nav-contact": "Contact",
+      "hero-kicker": "👋 Hello! Welcome to Jimin Lee's profile",
+      "hero-title": "Hi, I'm <span>Jimin Lee</span>.",
+      "hero-sub": "I enjoy connecting people and work more smoothly. This page includes a quick intro, strengths, projects, and contact details.",
+      "cta-contact": "Get in touch ✉️",
+      "cta-projects": "View projects →",
+      "cta-print": "Print / PDF 🖨️",
+      "meta-location": "Seoul / Remote",
+      "meta-interests": "Interests: Planning · Content · Communication",
+      "meta-keywords": "Keywords: Reliability, Execution, Collaboration",
+      "profile-name": "Jimin Lee",
+      "profile-role": "One-line intro: “Consistent, tidy, and through to the end.”",
+      "likes-title": "Likes",
+      "likes-body": "Good writing · Walks · Tidying up",
+      "strengths-title": "Good at",
+      "strengths-body": "Problem framing · Documentation · Scheduling",
+      "one-line-title": "One-line intro",
+      "one-line-body": "I break down goals into actionable plans and deliver steadily to completion.",
+      "about-title": "About",
+      "about-body": "Jimin Lee drives work with <b style=\"color:var(--text)\">clear communication</b> and <b style=\"color:var(--text)\">steady execution</b>. I like to structure unfamiliar tasks quickly and summarize them in a way the team can easily grasp.",
+      "tag-documentation": "Documentation",
+      "tag-planning": "Planning",
+      "tag-communication": "Communication",
+      "tag-collaboration": "Collaboration",
+      "highlights-title": "Experience highlights",
+      "highlight-1": "<b>Project leadership</b> — scoped schedules/roles and drove execution",
+      "highlight-2": "<b>Content production</b> — end-to-end from planning to publishing",
+      "highlight-3": "<b>Process improvement</b> — simplified repetitive work",
+      "strengths-section-title": "Strengths",
+      "strength-1": "Organize complex info into <b>simple structures</b>",
+      "strength-2": "Finish what I start with <b>persistence</b>",
+      "strength-3": "Easy-to-follow <b>communication</b>",
+      "strength-4": "Start small and iterate fast with <b>execution</b>",
+      "skill-keywords-title": "Skill keywords",
+      "skill-notion": "Notion / Docs",
+      "skill-ppt": "PPT planning",
+      "skill-content": "Content ops",
+      "skill-research": "Research",
+      "skill-schedule": "Schedule management",
+      "skill-note": "You can customize this section for “dev/design/marketing” and more.",
+      "projects-title": "Activities / Projects",
+      "project-1": "<b>Project A</b> — set goals and built execution plans",
+      "project-2": "<b>Project B</b> — organized docs/guides and operations",
+      "project-3": "<b>Project C</b> — improved communication/collaboration efficiency",
+      "project-note": "Add real project names and outcomes to make this shine.",
+      "gallery-title": "Gallery",
+      "gallery-note": "This is a sample image area. Replace file names to use your own photos.",
+      "contact-title": "Contact",
+      "contact-note": "Replace the info below with real contact details.",
+      "contact-email": "Email",
+      "contact-instagram": "Instagram",
+      "footer-rights": "© <span id=\"year\"></span> Jimin Lee. All rights reserved.",
+      "footer-top": "Back to top ↑"
+    }
+  };
+
+  let currentLang = initialLang;
 
   const applyTheme = (mode) => {
     if (mode === "light") {
@@ -393,16 +537,63 @@
     }
     const isLight = mode === "light";
     toggle.setAttribute("aria-pressed", String(isLight));
-    toggle.textContent = isLight ? "다크 모드" : "화이트 모드";
+    toggle.textContent = isLight
+      ? (currentLang === "ko" ? "다크 모드" : "Dark mode")
+      : (currentLang === "ko" ? "화이트 모드" : "Light mode");
+  };
+
+  const applyLanguage = (lang) => {
+    currentLang = lang;
+    root.setAttribute("lang", lang === "ko" ? "ko" : "en");
+
+    translatableAttrs.forEach((el) => {
+      const key = el.getAttribute("data-i18n-key");
+      if (translations[lang] && key in translations[lang]) {
+        const attr = el.getAttribute("data-i18n-attr");
+        el.setAttribute(attr, translations[lang][key]);
+      }
+    });
+
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (translations[lang] && key in translations[lang]) {
+        el.textContent = translations[lang][key];
+      }
+    });
+
+    document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-html");
+      if (translations[lang] && key in translations[lang]) {
+        el.innerHTML = translations[lang][key];
+      }
+    });
+
+    document.title = translations[lang]["meta-title"] || document.title;
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc && translations[lang]["meta-desc"]) {
+      desc.setAttribute("content", translations[lang]["meta-desc"]);
+    }
+
+    langToggle.textContent = lang === "ko" ? "English" : "한국어";
+    langToggle.setAttribute("aria-pressed", String(lang === "en"));
+    localStorage.setItem("lang", lang);
+    applyTheme(root.getAttribute("data-theme") === "light" ? "light" : "dark");
+    updateYear();
   };
 
   applyTheme(initialTheme);
+  applyLanguage(initialLang);
 
   toggle.addEventListener("click", () => {
     const isLight = root.getAttribute("data-theme") === "light";
     const nextTheme = isLight ? "dark" : "light";
     localStorage.setItem("theme", nextTheme);
     applyTheme(nextTheme);
+  });
+
+  langToggle.addEventListener("click", () => {
+    const nextLang = currentLang === "ko" ? "en" : "ko";
+    applyLanguage(nextLang);
   });
 </script>
 </body>
