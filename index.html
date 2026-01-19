@@ -24,30 +24,33 @@
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
   <meta name="author" content="이지민" />
   <meta name="keywords" content="이지민, 콘텐츠 기획, 협업, 프로젝트 관리, 커뮤니케이션, 포트폴리오" />
-  <link rel="canonical" href="https://issaclee3518.github.io/Ai_product_builder/" />
+  <link rel="canonical" href="https://issac.store/" />
+  <link rel="alternate" hreflang="ko" href="https://issac.store/" />
+  <link rel="alternate" hreflang="en" href="https://issac.store/?lang=en" />
+  <link rel="alternate" hreflang="x-default" href="https://issac.store/" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <meta name="theme-color" content="#0b1220" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="이지민 | 콘텐츠 기획·커뮤니케이션 포트폴리오" />
   <meta property="og:description" content="콘텐츠 기획과 협업 프로세스를 설계하는 이지민의 포트폴리오입니다. 명확한 커뮤니케이션과 실행력으로 프로젝트를 완성한 사례와 강점을 확인해 보세요." />
-  <meta property="og:url" content="https://issaclee3518.github.io/Ai_product_builder/" />
+  <meta property="og:url" content="https://issac.store/" />
   <meta property="og:site_name" content="이지민 포트폴리오" />
   <meta property="og:locale" content="ko_KR" />
   <meta property="og:locale:alternate" content="en_US" />
-  <meta property="og:image" content="https://issaclee3518.github.io/Ai_product_builder/favicon.ico" />
+  <meta property="og:image" content="https://issac.store/favicon.ico" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="이지민 | 콘텐츠 기획·커뮤니케이션 포트폴리오" />
   <meta name="twitter:description" content="콘텐츠 기획과 협업 프로세스를 설계하는 이지민의 포트폴리오입니다. 명확한 커뮤니케이션과 실행력으로 프로젝트를 완성한 사례와 강점을 확인해 보세요." />
-  <meta name="twitter:image" content="https://issaclee3518.github.io/Ai_product_builder/favicon.ico" />
-  <script type="application/ld+json">
+  <meta name="twitter:image" content="https://issac.store/favicon.ico" />
+  <script type="application/ld+json" id="ld-person">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "이지민",
       "alternateName": "Jimin Lee",
       "description": "콘텐츠 기획과 협업 프로세스를 설계하는 이지민의 포트폴리오.",
-      "url": "https://issaclee3518.github.io/Ai_product_builder/",
-      "image": "https://issaclee3518.github.io/Ai_product_builder/favicon.ico",
+      "url": "https://issac.store/",
+      "image": "https://issac.store/favicon.ico",
       "jobTitle": "콘텐츠 기획자",
       "knowsAbout": [
         "콘텐츠 기획",
@@ -618,15 +621,38 @@
     }
   };
   updateYear();
+  const BASE_URL = "https://issac.store/";
+  const EN_URL = `${BASE_URL}?lang=en`;
   const root = document.documentElement;
   const toggle = document.querySelector(".theme-toggle");
   const langToggle = document.querySelector(".lang-toggle");
   const translatableAttrs = document.querySelectorAll("[data-i18n-attr]");
   const storedTheme = localStorage.getItem("theme");
   const storedLang = localStorage.getItem("lang");
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramLang = urlParams.get("lang");
   const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   const initialTheme = storedTheme || (prefersDark ? "dark" : "light");
-  const initialLang = storedLang || "ko";
+  const canonicalLink = document.querySelector('link[rel="canonical"]');
+  const altKo = document.querySelector('link[rel="alternate"][hreflang="ko"]');
+  const altEn = document.querySelector('link[rel="alternate"][hreflang="en"]');
+  const altDefault = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
+  const ogUrl = document.querySelector('meta[property="og:url"]');
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  const ogDesc = document.querySelector('meta[property="og:description"]');
+  const ogLocale = document.querySelector('meta[property="og:locale"]');
+  const ogAltLocale = document.querySelector('meta[property="og:locale:alternate"]');
+  const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+  const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+  const ldScript = document.getElementById("ld-person");
+  const normalizeLang = (lang) => {
+    if (lang === "en") return "en";
+    if (lang === "ko") return "ko";
+    return null;
+  };
+  const urlLang = normalizeLang(paramLang);
+  const storageLang = normalizeLang(storedLang);
+  const initialLang = urlLang || storageLang || "ko";
 
   const translations = {
     ko: {
@@ -846,6 +872,33 @@
       : (currentLang === "ko" ? "화이트 모드" : "Light mode");
   };
 
+  const updateStructuredData = (href) => {
+    if (!ldScript) return;
+    try {
+      const data = JSON.parse(ldScript.textContent);
+      data.url = href;
+      data.image = `${BASE_URL}favicon.ico`;
+      ldScript.textContent = JSON.stringify(data);
+    } catch (err) {
+      console.warn("Failed to update JSON-LD", err);
+    }
+  };
+
+  const updateUrlMeta = (lang) => {
+    const href = lang === "en" ? EN_URL : BASE_URL;
+    if (canonicalLink) canonicalLink.setAttribute("href", href);
+    if (altKo) altKo.setAttribute("href", BASE_URL);
+    if (altEn) altEn.setAttribute("href", EN_URL);
+    if (altDefault) altDefault.setAttribute("href", BASE_URL);
+    if (ogUrl) ogUrl.setAttribute("content", href);
+    if (ogLocale) ogLocale.setAttribute("content", lang === "en" ? "en_US" : "ko_KR");
+    if (ogAltLocale) ogAltLocale.setAttribute("content", lang === "en" ? "ko_KR" : "en_US");
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState({}, "", href);
+    }
+    updateStructuredData(href);
+  };
+
   const applyLanguage = (lang) => {
     currentLang = lang;
     root.setAttribute("lang", lang === "ko" ? "ko" : "en");
@@ -877,6 +930,18 @@
     if (desc && translations[lang]["meta-desc"]) {
       desc.setAttribute("content", translations[lang]["meta-desc"]);
     }
+    if (ogTitle && translations[lang]["meta-title"]) {
+      ogTitle.setAttribute("content", translations[lang]["meta-title"]);
+    }
+    if (ogDesc && translations[lang]["meta-desc"]) {
+      ogDesc.setAttribute("content", translations[lang]["meta-desc"]);
+    }
+    if (twitterTitle && translations[lang]["meta-title"]) {
+      twitterTitle.setAttribute("content", translations[lang]["meta-title"]);
+    }
+    if (twitterDesc && translations[lang]["meta-desc"]) {
+      twitterDesc.setAttribute("content", translations[lang]["meta-desc"]);
+    }
 
     langToggle.textContent = lang === "ko" ? "English" : "한국어";
     langToggle.setAttribute("aria-pressed", String(lang === "en"));
@@ -886,6 +951,7 @@
     if (window.updateRpsLanguage) {
       window.updateRpsLanguage(lang);
     }
+    updateUrlMeta(lang);
   };
 
   applyTheme(initialTheme);

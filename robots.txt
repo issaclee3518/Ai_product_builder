@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://issaclee3518.github.io/Ai_product_builder/sitemap.xml
+Sitemap: https://issac.store/sitemap.xml
