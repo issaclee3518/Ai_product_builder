@@ -139,6 +139,53 @@
       border-color: rgba(214, 31, 74, 0.18);
       background: rgba(214, 31, 74, 0.08);
     }
+    .share-wrapper {
+      position: relative;
+    }
+    .share-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+    }
+    .share-button svg {
+      width: 16px;
+      height: 16px;
+    }
+    .share-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 180px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 18px 34px rgba(15, 23, 42, 0.18);
+      padding: 6px;
+      display: none;
+      z-index: 20;
+    }
+    .share-menu.open {
+      display: block;
+    }
+    .share-menu button {
+      all: unset;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      transition: background 0.15s, color 0.15s;
+    }
+    .share-menu button:hover {
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--accent);
+    }
     #board {
       position: relative;
       flex: 1;
@@ -288,6 +335,19 @@
         <label>두께
           <input type="range" id="thickness" min="1" max="50" value="6" aria-label="선 두께 조절" />
         </label>
+        <div class="share-wrapper">
+          <button type="button" class="pill-button share-button" id="share-button" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M18 16a3 3 0 0 0-2.141.908l-6.18-3.09a3 3 0 0 0 0-2.636l6.18-3.09A3 3 0 1 0 15 6a2.96 2.96 0 0 0 .205 1.07L9.026 10.16a3 3 0 1 0 0 3.68l6.179 3.09A3 3 0 1 0 18 16Zm0-11a1 1 0 1 1-1 1 1 1 0 0 1 1-1ZM6 14a1 1 0 1 1 1-1 1 1 0 0 1-1 1Zm12 6a1 1 0 1 1 1-1 1 1 0 0 1-1 1Z"/>
+            </svg>
+            공유하기
+          </button>
+          <div class="share-menu" id="share-menu" role="menu" aria-label="공유 대상 선택">
+            <button type="button" data-share="instagram" role="menuitem">인스타그램으로 공유</button>
+            <button type="button" data-share="kakao" role="menuitem">카카오톡으로 공유</button>
+            <button type="button" data-share="twitter" role="menuitem">트위터로 공유</button>
+          </div>
+        </div>
         <button type="button" class="pill-button danger" id="clear-board">전체 지우기</button>
         <button type="button" class="pill-button" id="download-board">이미지 저장</button>
       </div>
@@ -514,7 +574,7 @@
         canvas.classList.remove("drawing-made");
       });
 
-      const downloadBoard = () => {
+      const buildExportCanvas = () => {
         const boardRect = board.getBoundingClientRect();
         const exportCanvas = document.createElement("canvas");
         exportCanvas.width = canvas.width;
@@ -564,20 +624,176 @@
           exportCtx.restore();
         });
 
+        return exportCanvas;
+      };
+
+      const exportBoardBlob = () => new Promise((resolve, reject) => {
+        const exportCanvas = buildExportCanvas();
         exportCanvas.toBlob((blob) => {
-          if (!blob) return;
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = `whiteboard-${Date.now()}.png`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
-        });
+          if (blob) {
+            resolve({ blob });
+          } else {
+            reject(new Error("Failed to export whiteboard."));
+          }
+        }, "image/png", 0.92);
+      });
+
+      const triggerDownload = (blob, filename = `whiteboard-${Date.now()}.png`) => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      };
+
+      const downloadBoard = async () => {
+        try {
+          const { blob } = await exportBoardBlob();
+          triggerDownload(blob);
+        } catch (error) {
+          console.error(error);
+          alert("이미지를 저장하는 데 문제가 발생했습니다. 다시 시도해 주세요.");
+        }
       };
 
       downloadButton.addEventListener("click", downloadBoard);
+
+      const collectNoteTexts = () => {
+        const noteBodies = [...textLayer.querySelectorAll(".note-body")];
+        return noteBodies
+          .map((el) => el.innerText.replace(/\s+/g, " ").trim())
+          .filter(Boolean)
+          .join("\n\n");
+      };
+
+      const formatShareText = (notesText) => {
+        if (notesText) {
+          const truncated = notesText.length > 500 ? `${notesText.slice(0, 497)}…` : notesText;
+          return `오늘의 화이트보드 메모\n${truncated}`;
+        }
+        return "화이트보드 메모를 공유합니다.";
+      };
+
+      const tryWebShare = async (blob, text) => {
+        if (!navigator.share) return false;
+        let files = undefined;
+        if (blob && typeof File !== "undefined") {
+          const file = new File([blob], `whiteboard-${Date.now()}.png`, { type: "image/png" });
+          files = [file];
+          if (navigator.canShare && !navigator.canShare({ files })) {
+            files = undefined;
+          }
+        }
+        try {
+          const shareData = {
+            title: "화이트보드 메모",
+            text
+          };
+          if (files) {
+            shareData.files = files;
+          }
+          await navigator.share(shareData);
+          return true;
+        } catch (error) {
+          if (error.name === "AbortError") {
+            return true;
+          }
+          console.warn("Web Share failed:", error);
+          return false;
+        }
+      };
+
+      const shareButton = document.getElementById("share-button");
+      const shareMenu = document.getElementById("share-menu");
+      const shareWrapper = shareButton?.parentElement;
+      const shareOptions = shareMenu?.querySelectorAll("button[data-share]");
+
+      const closeShareMenu = () => {
+        if (!shareMenu) return;
+        shareMenu.classList.remove("open");
+        shareButton?.setAttribute("aria-expanded", "false");
+      };
+
+      const openShareMenu = () => {
+        if (!shareMenu) return;
+        shareMenu.classList.add("open");
+        shareButton?.setAttribute("aria-expanded", "true");
+      };
+
+      const toggleShareMenu = () => {
+        if (!shareMenu) return;
+        const isOpen = shareMenu.classList.contains("open");
+        if (isOpen) {
+          closeShareMenu();
+        } else {
+          openShareMenu();
+        }
+      };
+
+      shareButton?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        toggleShareMenu();
+      });
+
+      document.addEventListener("pointerdown", (event) => {
+        if (!shareMenu?.classList.contains("open")) return;
+        if (!shareWrapper?.contains(event.target)) {
+          closeShareMenu();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeShareMenu();
+        }
+      });
+
+      const handleShareSelection = async (platform) => {
+        closeShareMenu();
+        let blob;
+        try {
+          ({ blob } = await exportBoardBlob());
+        } catch (error) {
+          console.error(error);
+          alert("공유 이미지를 준비하지 못했습니다. 잠시 후 다시 시도해 주세요.");
+          return;
+        }
+
+        const notesText = collectNoteTexts();
+        const shareText = formatShareText(notesText);
+
+        const shared = await tryWebShare(blob, shareText);
+        if (shared) {
+          return;
+        }
+
+        if (platform === "twitter") {
+          const tweetContent = notesText
+            ? `${notesText}`.slice(0, 260)
+            : "화이트보드 메모를 공유합니다.";
+          const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetContent)}`;
+          window.open(intentUrl, "_blank", "noopener,noreferrer");
+          return;
+        }
+
+        triggerDownload(blob);
+        if (platform === "instagram") {
+          alert("공유를 위한 이미지를 저장했습니다. 인스타그램 앱에서 스토리 또는 게시물로 이미지를 업로드해 주세요.");
+        } else if (platform === "kakao") {
+          alert("공유를 위한 이미지를 저장했습니다. 카카오톡에서 이미지를 선택해 친구에게 보내거나 스토리에 올려 보세요.");
+        }
+      };
+
+      shareOptions?.forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = button.dataset.share;
+          if (!target) return;
+          handleShareSelection(target);
+        });
+      });
 
       window.addEventListener("resize", resizeCanvas);
       resizeCanvas();
