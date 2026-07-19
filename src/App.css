@@ -331,6 +331,23 @@
   color: #e2e8f0;
 }
 
+.site-footer {
+  display: flex;
+  justify-content: center;
+  padding: 10px 16px 14px;
+  font-size: 12px;
+}
+
+.site-footer a {
+  color: var(--ink-muted, #5b6b79);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: var(--accent, #2563eb);
+  text-decoration: underline;
+}
+
 @media (max-width: 720px) {
   .toolbar {
     justify-content: center;

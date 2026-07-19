@@ -12,6 +12,7 @@
     "@react-three/drei": "^10.0.6",
     "@react-three/fiber": "^9.1.2",
     "konva": "^9.3.20",
+    "perfect-freehand": "^1.2.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-konva": "^19.0.6",

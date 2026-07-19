@@ -86,6 +86,10 @@ export default function App() {
           />
         )}
       </main>
+
+      <footer className="site-footer">
+        <a href="/privacy.html">개인정보처리방침</a>
+      </footer>
     </div>
   );
 }
