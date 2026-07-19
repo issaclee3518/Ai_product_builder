@@ -88,7 +88,11 @@ export default function App() {
       </main>
 
       <footer className="site-footer">
+        <a href="/about.html">소개</a>
+        <a href="/guide.html">사용법</a>
+        <a href="/faq.html">FAQ</a>
         <a href="/privacy.html">개인정보처리방침</a>
+        <a href="mailto:issaclee6320@gmail.com">문의</a>
       </footer>
     </div>
   );

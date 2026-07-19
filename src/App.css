@@ -333,7 +333,9 @@
 
 .site-footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 8px 14px;
   padding: 10px 16px 14px;
   font-size: 12px;
 }
