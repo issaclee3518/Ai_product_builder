@@ -160,7 +160,21 @@ export function streamlineStroke(flatPoints, options = {}) {
   const input = flatToInput(flatPoints);
   if (input.length < 2) return flatPoints.slice();
 
-  const strokePoints = getStrokePoints(input, {
+  // Drop consecutive duplicate / near-duplicate samples. perfect-freehand
+  // divides by segment length internally, so zero-length segments (e.g. the
+  // pointer sitting still while holding) produce NaN coordinates.
+  const deduped = [];
+  for (const p of input) {
+    if (!Number.isFinite(p[0]) || !Number.isFinite(p[1])) continue;
+    const prev = deduped[deduped.length - 1];
+    if (!prev || Math.hypot(p[0] - prev[0], p[1] - prev[1]) > 0.01) {
+      deduped.push(p);
+    }
+  }
+
+  if (deduped.length < 2) return flatPoints.slice();
+
+  const strokePoints = getStrokePoints(deduped, {
     size: options.size ?? Math.max(8, options.strokeWidth ?? 8),
     thinning: 0.5,
     smoothing: 0.62,
@@ -169,7 +183,14 @@ export function streamlineStroke(flatPoints, options = {}) {
     last: true,
   });
 
-  return strokePointsToFlat(strokePoints);
+  const flat = strokePointsToFlat(strokePoints);
+
+  // Guard against any NaN slipping through: fall back to the raw stroke.
+  for (let i = 0; i < flat.length; i += 1) {
+    if (!Number.isFinite(flat[i])) return flatPoints.slice();
+  }
+
+  return flat.length >= 4 ? flat : flatPoints.slice();
 }
 
 /**
@@ -282,20 +303,28 @@ export function recognizeQuickShape(flatPoints) {
 /**
  * Hold-to-snap: try geometric QuickShape, else beautify with perfect-freehand.
  */
+function pointsAreFinite(points) {
+  if (!points || points.length < 4) return false;
+  for (let i = 0; i < points.length; i += 1) {
+    if (!Number.isFinite(points[i])) return false;
+  }
+  return true;
+}
+
 export function applyQuickShape(flatPoints, options = {}) {
-  if (!flatPoints || flatPoints.length < 8) return null;
+  if (!flatPoints || flatPoints.length < 4) return null;
 
   const smoothed = streamlineStroke(flatPoints, options);
 
   const recognized =
     recognizeQuickShape(smoothed) || recognizeQuickShape(flatPoints);
 
-  if (recognized) return recognized;
+  if (recognized && pointsAreFinite(recognized.points)) return recognized;
 
-  const smoothedPts = toPairs(smoothed);
+  const safe = pointsAreFinite(smoothed) ? smoothed : flatPoints.slice();
   return {
     type: "freehand",
-    points: smoothed,
-    closed: isNearlyClosed(smoothedPts),
+    points: safe,
+    closed: isNearlyClosed(toPairs(safe)),
   };
 }

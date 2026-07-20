@@ -12,12 +12,12 @@ import {
 import * as THREE from "three";
 
 export const SHAPE_TYPES = [
-  { id: "box", label: "정육면체", icon: "■" },
-  { id: "sphere", label: "구", icon: "●" },
-  { id: "cylinder", label: "원기둥", icon: "▮" },
-  { id: "cone", label: "원뿔", icon: "▲" },
-  { id: "torus", label: "도넛", icon: "◎" },
-  { id: "pyramid", label: "피라미드", icon: "△" },
+  { id: "box", label: "Cube", icon: "■" },
+  { id: "sphere", label: "Sphere", icon: "●" },
+  { id: "cylinder", label: "Cylinder", icon: "▮" },
+  { id: "cone", label: "Cone", icon: "▲" },
+  { id: "torus", label: "Torus", icon: "◎" },
+  { id: "pyramid", label: "Pyramid", icon: "△" },
 ];
 
 const FLOOR_SIZE = 400;
@@ -135,7 +135,7 @@ function CameraFly({ enabled, orbitRef, speed = 12, blockWE = false }) {
     right.crossVectors(forward, worldUp).normalize();
 
     let moved = false;
-    // 도형 선택 중에는 W/E는 기즈모 전용 → 카메라 이동에 쓰지 않음
+    // While a shape is selected, W/E are for the gizmo — not camera movement
     if (keys.current.KeyW && !blockWE) {
       camera.position.addScaledVector(forward, moveSpeed);
       moved = true;
@@ -191,7 +191,7 @@ function getTransformGizmo(controls) {
   return gizmo;
 }
 
-/** 포인터가 활성 TransformControls 손잡이 위에 있는지 검사 (도형보다 손잡이 우선) */
+/** Whether the pointer is over an active TransformControls handle (handles beat shapes) */
 function pointerHitsTransformGizmo(controls, clientX, clientY, camera, gl) {
   if (!controls || !camera || !gl) return false;
   const gizmo = getTransformGizmo(controls);
@@ -220,8 +220,8 @@ function makeScaleHandleMesh(name, size, material) {
   return mesh;
 }
 
-// three-stdlib 스케일 기즈모에는 가운데 XYZ가 없고, 축 끝 반투명 XYZX/Y/Z만 있음
-// → 반투명 큐브 제거 후, 균일 스케일용 노란 가운데 XYZ를 직접 추가
+// three-stdlib scale gizmo has no center XYZ — only semi-transparent axis-end cubes
+// → remove those cubes and add a yellow center XYZ for uniform scale
 function enhanceGizmo(controls) {
   const gizmo = getTransformGizmo(controls);
   if (!gizmo?.gizmo?.scale || !gizmo?.picker?.scale) return;
@@ -238,7 +238,7 @@ function enhanceGizmo(controls) {
 
   strip("translate", ["XY", "YZ", "XZ"]);
   strip("rotate", ["E", "XYZE"]);
-  // 평면 핸들 + 축 끝 반투명 흰 큐브(XYZX/Y/Z) 제거
+  // Remove plane handles and semi-transparent axis-end cubes (XYZX/Y/Z)
   strip("scale", ["XY", "YZ", "XZ", "XYZX", "XYZY", "XYZZ"]);
 
   const yellowMat =
@@ -321,7 +321,7 @@ function ShapeObject({
     group.scale.set(shape.scale[0], shape.scale[1], shape.scale[2]);
   }, [shape]);
 
-  // 기즈모 크기를 도형 bounding size의 1.2배로 유지 + 모드 바뀔 때 손잡이 재적용
+  // Keep gizmo size at 1.2× shape bounding size; reapply handles when mode changes
   useFrame(() => {
     const controls = controlsRef.current;
     const group = groupRef.current;
@@ -352,7 +352,7 @@ function ShapeObject({
   const handlePointerDown = (event) => {
     if (event.button !== 0) return;
 
-    // 손잡이가 다른 도형과 겹쳐도 기즈모가 우선
+    // Gizmo wins even when handles overlap other shapes
     const controls = transformGuardRef?.controls;
     if (
       controls &&
@@ -538,7 +538,7 @@ function SceneContent({
     setDropRequest(null);
   }, [addShapeAt, dropRequest, setDropRequest]);
 
-  // 색상 피커를 바꾸면 선택된 도형에 바로 칠하기
+  // Changing the color picker fills the selected shape immediately
   useEffect(() => {
     if (!selectedId) {
       prevColorRef.current = color;
@@ -666,7 +666,7 @@ function SceneContent({
     [onColorSync, setSelectedId, setTransformMode]
   );
 
-  // 선택 중에도 WASD 카메라 이동 (기즈모 드래그 중만 중지)
+  // WASD camera while selected (stop only during gizmo drag)
   const flyEnabled = !isTransforming;
 
   useEffect(() => {
@@ -759,9 +759,9 @@ function SceneContent({
 
 function ShapePalette({ transformMode, hasSelection, onShapePointerDown }) {
   return (
-    <aside className="shape-palette" aria-label="3D 도형 팔레트">
-      <p className="shape-palette-title">도형</p>
-      <p className="shape-palette-hint">도형을 누른 채 캔버스로 끌어다 놓으세요.</p>
+    <aside className="shape-palette" aria-label="3D shape palette">
+      <p className="shape-palette-title">Shapes</p>
+      <p className="shape-palette-hint">Press a shape and drag it onto the canvas.</p>
       <div className="shape-palette-list">
         {SHAPE_TYPES.map((shape) => (
           <div
@@ -770,7 +770,7 @@ function ShapePalette({ transformMode, hasSelection, onShapePointerDown }) {
             role="button"
             tabIndex={0}
             onPointerDown={(event) => onShapePointerDown(shape, event)}
-            title={`${shape.label} — 캔버스로 끌어다 놓기`}
+            title={`${shape.label} — drag onto canvas`}
           >
             <span className="shape-chip-icon" aria-hidden="true">
               {shape.icon}
@@ -786,21 +786,21 @@ function ShapePalette({ transformMode, hasSelection, onShapePointerDown }) {
             <p className="hotkey-row">
               <kbd>A</kbd>
               <kbd>S</kbd>
-              <kbd>D</kbd> 카메라 · <kbd>Q</kbd>아래
+              <kbd>D</kbd> camera · <kbd>Q</kbd> down
             </p>
             <p className={`hotkey-row ${transformMode === "translate" ? "active" : ""}`}>
-              <kbd>W</kbd> 기즈모 이동
+              <kbd>W</kbd> move gizmo
             </p>
             <p className={`hotkey-row ${transformMode === "rotate" ? "active" : ""}`}>
-              <kbd>E</kbd> 기즈모 회전
+              <kbd>E</kbd> rotate gizmo
             </p>
             <p className={`hotkey-row ${transformMode === "scale" ? "active" : ""}`}>
-              <kbd>R</kbd> 크기 (가운데=비율 유지)
+              <kbd>R</kbd> scale (center = uniform)
             </p>
             <p className="hotkey-row">
-              <kbd>Space</kbd> + 이동 = 복제
+              <kbd>Space</kbd> + move = duplicate
             </p>
-            <p className="hotkey-row muted">색상 피커로 선택 도형 칠하기</p>
+            <p className="hotkey-row muted">Fill selection with color picker</p>
           </>
         ) : (
           <>
@@ -808,9 +808,9 @@ function ShapePalette({ transformMode, hasSelection, onShapePointerDown }) {
               <kbd>W</kbd>
               <kbd>A</kbd>
               <kbd>S</kbd>
-              <kbd>D</kbd> 카메라 · <kbd>E</kbd>위 <kbd>Q</kbd>아래
+              <kbd>D</kbd> camera · <kbd>E</kbd> up <kbd>Q</kbd> down
             </p>
-            <p className="hotkey-row muted">우클릭: 시점 회전 · Shift: 빠르게</p>
+            <p className="hotkey-row muted">Right-click: orbit · Shift: faster</p>
           </>
         )}
       </div>
@@ -848,7 +848,7 @@ export default function Board3D({
     };
   }, [exportRef]);
 
-  // 포인터 기반 드래그: 사이드바 도형을 누른 채 끌어서 캔버스에 놓으면 배치
+  // Pointer drag: press sidebar shape and drop on canvas to place
   const handleShapePointerDown = useCallback(
     (shape, event) => {
       if (event.button !== 0) return;
@@ -885,7 +885,7 @@ export default function Board3D({
           e.clientY <= rect.bottom;
         if (!inBoard) return;
 
-        // 팔레트 위에 놓으면 무시
+        // Ignore drops on the palette
         const palette = board.querySelector(".shape-palette");
         if (palette) {
           const p = palette.getBoundingClientRect();
@@ -946,7 +946,7 @@ export default function Board3D({
           cursor: "default",
         }}
         onPointerMissed={(event) => {
-          // 기즈모 조작 중/직후 또는 기즈모 핸들 위에서는 선택 해제하지 않음
+          // Don't deselect while using gizmo or hovering a handle
           if (transformGuardRef.controls?.axis) return;
           if (Date.now() - transformGuardRef.current < 400) return;
           if (event.button === 0) setSelectedId(null);

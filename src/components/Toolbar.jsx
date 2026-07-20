@@ -13,16 +13,16 @@ export default function Toolbar({
   onDownload,
 }) {
   return (
-    <header className="toolbar" aria-label="화이트보드 도구 막대">
+    <header className="toolbar" aria-label="Whiteboard toolbar">
       <div className="toolbar-left">
         <span className="brand-mark" aria-hidden="true">
           ✎
         </span>
-        메모 화이트보드
+        Memo Whiteboard
       </div>
 
       <div className="controls">
-        <div className="toggle-group" role="group" aria-label="차원 선택">
+        <div className="toggle-group" role="group" aria-label="Dimension">
           <button
             type="button"
             className={dimension === "2d" ? "active" : ""}
@@ -39,7 +39,7 @@ export default function Toolbar({
           </button>
         </div>
 
-        <div className="toggle-group" role="group" aria-label="도구 선택">
+        <div className="toggle-group" role="group" aria-label="Tool">
           {dimension === "2d" ? (
             <>
               <button
@@ -47,14 +47,14 @@ export default function Toolbar({
                 className={tool === "draw" ? "active" : ""}
                 onClick={() => onToolChange("draw")}
               >
-                그리기
+                Draw
               </button>
               <button
                 type="button"
                 className={tool === "erase" ? "active" : ""}
                 onClick={() => onToolChange("erase")}
               >
-                지우개
+                Eraser
               </button>
             </>
           ) : (
@@ -64,38 +64,38 @@ export default function Toolbar({
                 className={tool === "place" ? "active" : ""}
                 onClick={() => onToolChange("place")}
               >
-                편집
+                Edit
               </button>
               <button
                 type="button"
                 className={tool === "erase" ? "active" : ""}
                 onClick={() => onToolChange("erase")}
               >
-                지우개
+                Eraser
               </button>
             </>
           )}
         </div>
 
         <label>
-          색상
+          Color
           <input
             type="color"
             value={color}
             onChange={(event) => onColorChange(event.target.value)}
-            aria-label="색상 선택"
+            aria-label="Pick color"
           />
         </label>
 
         <label>
-          {dimension === "3d" ? "배치 크기" : "두께"}
+          {dimension === "3d" ? "Place size" : "Width"}
           <input
             type="range"
             min="1"
             max="50"
             value={thickness}
             onChange={(event) => onThicknessChange(Number(event.target.value))}
-            aria-label={dimension === "3d" ? "새 도형 크기" : "선 두께 조절"}
+            aria-label={dimension === "3d" ? "New shape size" : "Stroke width"}
           />
           <span className="range-value" aria-hidden="true">
             {thickness}
@@ -104,14 +104,14 @@ export default function Toolbar({
 
         {dimension === "3d" && (
           <label>
-            카메라 속도
+            Camera speed
             <input
               type="range"
               min="2"
               max="40"
               value={cameraSpeed}
               onChange={(event) => onCameraSpeedChange(Number(event.target.value))}
-              aria-label="카메라 이동 속도"
+              aria-label="Camera move speed"
             />
             <span className="range-value" aria-hidden="true">
               {cameraSpeed}
@@ -120,10 +120,10 @@ export default function Toolbar({
         )}
 
         <button type="button" className="pill-button danger" onClick={onClear}>
-          전체 지우기
+          Clear all
         </button>
         <button type="button" className="pill-button" onClick={onDownload}>
-          이미지 저장
+          Save image
         </button>
       </div>
     </header>

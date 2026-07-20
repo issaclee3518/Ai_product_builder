@@ -31,7 +31,7 @@ export default function App() {
       await exportRef.current();
     } catch (error) {
       console.error(error);
-      alert("이미지를 저장하는 데 문제가 발생했습니다. 다시 시도해 주세요.");
+      alert("Something went wrong while saving the image. Please try again.");
     }
   }, []);
 
@@ -54,13 +54,13 @@ export default function App() {
 
       <main
         className={`board-shell ${dimension === "3d" ? "is-3d" : ""}`}
-        aria-label={dimension === "2d" ? "2D 화이트보드" : "3D 화이트보드"}
+        aria-label={dimension === "2d" ? "2D whiteboard" : "3D whiteboard"}
       >
         {!hasStrokes && (
           <div className="board-hint">
             {dimension === "2d"
-              ? "평면 화이트보드에 드래그해 그림을 그려 보세요."
-              : "도형 드래그 배치 · 선택 후 색상 피커로 칠하기 · WASD 카메라 · W/E/R 기즈모"}
+              ? "Drag to draw. Double-click a shape edge to select and move, or draw inside shapes."
+              : "Drag shapes to place · Select and fill with the color picker · WASD camera · W/E/R gizmo"}
           </div>
         )}
 
@@ -88,11 +88,12 @@ export default function App() {
       </main>
 
       <footer className="site-footer">
-        <a href="/about.html">소개</a>
-        <a href="/guide.html">사용법</a>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/guide.html">Guide</a>
         <a href="/faq.html">FAQ</a>
-        <a href="/privacy.html">개인정보처리방침</a>
-        <a href="mailto:issaclee6320@gmail.com">문의</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="mailto:issaclee6320@gmail.com">Contact</a>
       </footer>
     </div>
   );

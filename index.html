@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>메모 화이트보드</title>
+    <title>Memo Whiteboard | Browser 2D & 3D Sketch Tool</title>
     <meta
       name="description"
-      content="2D와 3D로 그릴 수 있는 화이트보드입니다. Konva와 React Three Fiber로 제작되었습니다."
+      content="Memo Whiteboard — sketch ideas instantly in your browser. No install or sign-up. 2D drawing and 3D shape placement in one tab."
     />
     <meta name="robots" content="index,follow" />
     <script
@@ -15,15 +15,157 @@
       crossorigin="anonymous"
     ></script>
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      as="style"
-      crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/site.css" />
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+  <body class="page-landing">
+    <div class="hero-screen">
+      <header class="hero-nav">
+        <a class="hero-nav-brand" href="/" aria-current="page">Memo Whiteboard</a>
+        <nav class="hero-nav-links" aria-label="Site menu">
+          <a href="/about.html">About</a>
+          <a href="/guide.html">Guide</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="/privacy.html">Privacy</a>
+        </nav>
+      </header>
+
+      <section class="hero-stage">
+        <div class="hero-copy">
+          <h1 class="hero-title">Memo Whiteboard</h1>
+          <p class="hero-lead">
+            Sketch in 2D and 3D right in your browser. No install, no account.
+          </p>
+          <div class="hero-cta">
+            <a class="landing-button" href="/app/">Open whiteboard</a>
+            <a class="landing-button ghost" href="/guide.html">View guide</a>
+          </div>
+        </div>
+
+        <div class="hero-board" aria-hidden="true">
+          <div class="hero-board-sheet">
+            <svg class="hero-sketch" viewBox="0 0 640 360" fill="none">
+              <path
+                class="sketch-line sketch-a"
+                d="M72 248C118 210 156 168 214 152C278 134 318 178 372 190C430 204 478 168 552 132"
+                stroke="currentColor"
+                stroke-width="3.5"
+                stroke-linecap="round"
+              />
+              <rect
+                class="sketch-shape sketch-b"
+                x="96"
+                y="72"
+                width="118"
+                height="86"
+                rx="10"
+                stroke="currentColor"
+                stroke-width="3"
+              />
+              <circle
+                class="sketch-shape sketch-c"
+                cx="420"
+                cy="118"
+                r="46"
+                stroke="currentColor"
+                stroke-width="3"
+              />
+              <path
+                class="sketch-shape sketch-d"
+                d="M468 248L534 248L501 188Z"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linejoin="round"
+              />
+              <path
+                class="sketch-line sketch-e"
+                d="M168 292H318"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </svg>
+            <div class="hero-board-glow"></div>
+          </div>
+        </div>
+      </section>
+
+      <a class="hero-scroll" href="#details">Scroll for more</a>
+    </div>
+
+    <main id="details" class="landing-details">
+      <section>
+        <h2>What can you do?</h2>
+        <ul>
+          <li>
+            <strong>2D whiteboard</strong> — Draw freely; hold briefly to snap
+            strokes into lines, circles, rectangles, and triangles with QuickShape.
+          </li>
+          <li>
+            <strong>Select & move shapes</strong> — Click a stroke outline to select,
+            drag to move, copy, paste, or delete.
+          </li>
+          <li>
+            <strong>3D whiteboard</strong> — Place shapes, move, rotate, and scale
+            them while exploring the scene with the camera.
+          </li>
+          <li>
+            <strong>Save as image</strong> — Download your board as PNG to share or
+            keep.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Great for</h2>
+        <p>
+          Roughing out structure before opening a heavy design tool, quick notes in
+          class or meetings, and switching between 2D and 3D to organize ideas.
+          Open instantly with no account — save only what you need as an image.
+        </p>
+      </section>
+
+      <section>
+        <h2>Getting started</h2>
+        <ol>
+          <li>
+            Click <a href="/app/">Open whiteboard</a> to launch the board.
+          </li>
+          <li>Choose 2D or 3D mode from the toolbar.</li>
+          <li>Draw and place shapes, then save as an image.</li>
+        </ol>
+        <p>
+          See the <a href="/guide.html">guide</a> and
+          <a href="/faq.html">FAQ</a> for details. Learn more on the
+          <a href="/about.html">about</a> page.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>
+          Send feedback or bug reports to
+          <a href="mailto:issaclee6320@gmail.com">issaclee6320@gmail.com</a>.
+        </p>
+      </section>
+
+      <div class="site-footer-links">
+        <a href="/app/">Open whiteboard</a>
+        <a href="/about.html">About</a>
+        <a href="/guide.html">Guide</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/privacy.html">Privacy policy</a>
+      </div>
+    </main>
   </body>
 </html>
